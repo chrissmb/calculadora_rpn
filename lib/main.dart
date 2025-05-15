@@ -30,6 +30,7 @@ class MyHomePage extends StatefulWidget {
 
 class MyHomePageState extends State<MyHomePage> {
   String display = '0';
+  String cacheDisplay = '';
   Tipo ultimoTipo = Tipo.enter;
   List<Decimal> cache = [];
   var historicoCtrl = TextEditingController();
@@ -56,6 +57,14 @@ class MyHomePageState extends State<MyHomePage> {
                 readOnly: true,
                 controller: historicoCtrl,
               ),
+            ),
+            Text(cacheDisplay, style: const TextStyle(fontSize: 20.0)),
+            const Divider(
+              color: Colors.grey,
+              height: 20,
+              thickness: 2,
+              indent: 0,
+              endIndent: 0,
             ),
             Text(
               display,
@@ -204,15 +213,24 @@ class MyHomePageState extends State<MyHomePage> {
   }
   
   void removeCacheItem() {
-    setState(() => cache.removeAt(0));
+    setState(() {
+      cache.removeAt(0);
+      cacheDisplay = cache.join(" | ");
+    });
   }
   
   void insereNoCache() {
-    setState(() => cache.insert(0, getValorDisplay()));
+    setState(() {
+      cache.insert(0, getValorDisplay());
+      cacheDisplay = cache.join(" | ");
+    });
   }
   
   void clearCache() {
-    setState(cache.clear);
+    setState((){
+      cache.clear();
+      cacheDisplay = '';
+    });
   }
   
   void soma() {
